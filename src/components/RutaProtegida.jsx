@@ -4,11 +4,14 @@ import storeAuth from "../context/storeAuth.js";
 const RutaProtegida = ({ children, rol }) => {
   const { token, rol: rolUsuario } = storeAuth();
 
-  if (!token || rolUsuario !== rol) {
-    return null;
-    }
-  if(rolUsuario!==rol){
-        return <Navigate to="/login" replace />;
+  // Si no hay token o no hay rol, redirige al login
+  if (!token || !rolUsuario) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // Si el rol no coincide, redirige también
+  if (rol && rolUsuario !== rol) {
+    return <Navigate to="/login" replace />;
   }
 
   return children;

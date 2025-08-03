@@ -1,28 +1,31 @@
-import {create} from "zustand";
-import {persist} from "zustand/middleware";
+import { Navigate } from "react-router-dom";
+import storeAuth from "../context/storeAuth.js";
+import { useEffect, useState } from "react";
 
-const storeAuth = create(
-    persist(
-        (set)=>({
-            token:null,
-            usuario:null,
-            rol:null,
+const RutaProtegida = ({ children, rol }) => {
+  const { token, rol: rolUsuario } = storeAuth();
+  const [cargando, setCargando] = useState(true);
 
-            setToken: (token)=> set({token}),
-            setUsuario: (usuario) => set ({usuario}),
-            setRol: (rol)=>set({rol}),
+  useEffect(() => {
+    // Simula la carga de datos del store
+    const timeout = setTimeout(() => {
+      setCargando(false);
+    }, 100); // Ajusta si necesitas más tiempo
 
-            clearAuth: () => set({ token: null, usuario: null, rol: null }),
-        }),
-        {
-            name: "auth", // clave en localStorage
-            partialize: (state) => ({
-                token: state.token,
-                usuario: state.usuario,
-                rol: state.rol,
-            }), 
-        }
+    return () => clearTimeout(timeout);
+  }, []);
 
-    )
-)
-export default storeAuth;
+  if (cargando) return <p>Cargando...</p>;
+
+  if (!token || !rolUsuario) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (rol && rolUsuario !== rol) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+};
+
+export default RutaProtegida;
