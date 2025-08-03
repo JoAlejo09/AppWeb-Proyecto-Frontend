@@ -1,7 +1,7 @@
 // src/pages/RedesSociales.jsx
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import storeAuth from "../context/storeAuth" // asegúrate que la ruta es correcta
+import storeAuth from "../context/storeAuth.jsx" // asegúrate que la ruta es correcta
 
 const RedesSociales = () => {
   const navigate = useNavigate();
