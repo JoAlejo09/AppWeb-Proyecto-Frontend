@@ -20,7 +20,7 @@ const Login = () => {
 
       const rol = data.rol;
       if (rol === "admin") {
-        navigate("/admin/perfil");
+        navigate("/admin");
       } else if (rol === "paciente") {
         navigate("/paciente");
       }
