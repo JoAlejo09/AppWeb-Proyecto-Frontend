@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import storeAuth from '../context/storeAuth.jsx';
+import storeAuth from '../context/storeAuth.js';
 
 const OAuthSuccess = () => {
   const navigate = useNavigate();
