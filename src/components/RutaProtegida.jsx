@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import storeAuth from "../context/storeAuth.js";
+import storeAuth from "../context/storeAuth.jsx";
 
 const RutaProtegida = ({ children, rol }) => {
   const { token, rol: rolUsuario } = storeAuth();
