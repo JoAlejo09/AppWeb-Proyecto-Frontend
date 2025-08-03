@@ -34,6 +34,7 @@ function App() {
         <Route path="/oauth-success" element={<OAuthSuccess/>}/>
 
         {/* Páginas Privadas (solo admins autenticados) */}
+        
         <Route
           path="/admin"
           element={

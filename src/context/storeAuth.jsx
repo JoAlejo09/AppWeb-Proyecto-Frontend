@@ -1,5 +1,4 @@
 import { Navigate } from "react-router-dom";
-import storeAuth from "./storeAuth.jsx";
 import { useEffect, useState } from "react";
 
 const RutaProtegida = ({ children, rol }) => {
