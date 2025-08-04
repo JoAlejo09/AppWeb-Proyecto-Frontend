@@ -175,7 +175,6 @@ export default function Register(){
           Iniciar sesión
         </Link>
       </div>
-    </div>
   <div className="mt-6">
           <p className="text-center text-gray-500 text-sm mb-2">O Registrarse con: </p>
           <div className="flex flex-col gap-3">
@@ -193,6 +192,7 @@ export default function Register(){
               </a>
               </div>
         </div>
+    </div>
   </div>
   <div className="w-full sm:w-1/2 h-1/3 sm:h-screen bg-[url('/freemp.jpeg')] bg-no-repeat bg-cover bg-center sm:block hidden"></div>
 </div>
