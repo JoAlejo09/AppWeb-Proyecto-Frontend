@@ -42,6 +42,7 @@ const Login = () => {
       if(token){
         try{
           const decoded = jwtDecode(token);
+          console.log(decoded)
           localStorage.setItem("usuario", JSON.stringify(decoded));
         
         navigate("/paciente")
