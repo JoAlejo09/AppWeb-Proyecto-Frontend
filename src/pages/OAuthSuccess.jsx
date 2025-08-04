@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import storeAuth from '../context/storeAuth.jsx';
-import jwtDecode from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 import { set } from 'react-hook-form';
 
 const OAuthSuccess = () => {
