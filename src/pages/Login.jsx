@@ -29,22 +29,6 @@ const Login = () => {
       toast.error(mensaje);
     }
   };
-  const RedesSociales = ()=>{
-    const navigate = useNavigate();
-
-    useEffect(()=>{
-      const params = new URLSearchParams(window.location.search);
-      const token = params.get("token");
-
-      if(token){
-        localStorage.setItem("token", token);
-        navigate("/paciente")
-      }else{
-        navigate("/login")
-      }
-    }, []);
-    return <div className="text-center mt-10">Iniciando Sesion...</div>
-  }
 
   return (
     <div className="flex flex-col sm:flex-row h-screen">

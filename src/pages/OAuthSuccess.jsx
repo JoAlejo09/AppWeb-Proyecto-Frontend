@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import storeAuth from '../context/storeAuth.jsx';
-import {jwtDecode} from 'jwt-decode';
-import { set } from 'react-hook-form';
+import { jwtDecode } from 'jwt-decode';
 
 const OAuthSuccess = () => {
   const navigate = useNavigate();
@@ -14,15 +13,28 @@ const OAuthSuccess = () => {
 
     if (token) {
       setToken(token);
+      localStorage.setItem('token', token);
+
       const decoded = jwtDecode(token);
       setNombre(decoded.name || "");
-      setRol(decoded.rol || "paciente"); // Asigna rol por defecto si no está presente      
-      // Podrías decodificar el token con jwt-decode para extraer rol, nombre, etc.
-      navigate('/dashboard');
+      setRol(decoded.rol || "paciente");
+
+      localStorage.setItem('nombre', decoded.name || "");
+      localStorage.setItem('rol', decoded.rol || "paciente");
+
+      // Si quieres guardar el usuario completo:
+      localStorage.setItem('usuario', JSON.stringify(decoded));
+
+      // Redirige según el rol
+      if (decoded.rol === "admin") {
+        navigate('/admin');
+      } else {
+        navigate('/paciente');
+      }
     } else {
       navigate('/login');
     }
-  }, []);
+  }, [navigate, setToken, setNombre, setRol]);
 
   return <p>Procesando inicio de sesión...</p>;
 };
