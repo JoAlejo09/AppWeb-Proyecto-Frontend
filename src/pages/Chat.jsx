@@ -1,12 +1,10 @@
 // src/pages/Chat.jsx
 import { useEffect, useState } from "react";
-import { socket } from "../services/socket.js"; // importa la instancia
-import storeAuth  from "../store/storeAuth.jsx"; // si usas Zustand para datos del usuario
-
-
+import { socket } from "../services/socket.js";
+import storeAuth from "../store/storeAuth.jsx";
 
 const Chat = () => {
-  const usuario = storeAuth((state) => state.user); // trae el usuario si lo tienes guardado
+  const usuario = storeAuth((state) => state.user);
   const [mensaje, setMensaje] = useState("");
   const [mensajes, setMensajes] = useState([]);
 
@@ -37,8 +35,7 @@ const Chat = () => {
     if (mensaje.trim() === "") return;
 
     socket.emit("enviar-mensaje-front-back", {
-      de: usuario?.nombre || "Anónimo",
-      mensaje,
+      body: mensaje,
     });
 
     setMensaje("");
@@ -51,7 +48,7 @@ const Chat = () => {
       <div className="border rounded-lg p-4 h-64 overflow-y-scroll mb-4 bg-gray-100">
         {mensajes.map((m, i) => (
           <div key={i} className="mb-2">
-            <strong>{m.de}:</strong> {m.mensaje}
+            <strong>{m.from}:</strong> {m.body}
           </div>
         ))}
       </div>
