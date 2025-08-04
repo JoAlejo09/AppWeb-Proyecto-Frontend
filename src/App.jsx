@@ -15,8 +15,7 @@ import PerfilAdmin from "./pages/admin/PerfilAdmin";
 import Confirm from "./pages/Confirm";
 import RedesSociales from "./pages/RedesSociales";
 import OAuthSuccess from "./pages/OAuthSuccess";
-import ChatPaciente from './pages/ChatPaciente'
-import ChatAdmin from './pages/ChatAdmin'
+import Chat from "./pages/Chat";
 
 function App() {
   return (
@@ -34,8 +33,8 @@ function App() {
         <Route path="/pacientes/confirmar/:token" element={<Confirm/>}/>
         <Route path="/redes-sociales" element={<RedesSociales />} />
         <Route path="/oauth-success" element={<OAuthSuccess/>}/>
-        <Route path="/chat-paciente" element={<ChatPaciente />} />
-        <Route path="/chat-admin" element={<ChatAdmin />} />
+        <Route path="/usuarios/chat" element={<Chat />} />
+        
 
 
         {/* Páginas Privadas (solo admins autenticados) */}
