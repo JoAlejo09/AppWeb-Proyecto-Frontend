@@ -35,8 +35,9 @@ const Chat = () => {
           const token = localStorage.getItem("token"); // o desde stwworeAuth
 
         const newSocket = io("https://mentalapp-backend-rqqe.onrender.com",{
+            transports: ['websocket'],
             auth:{
-                token,
+                token: `Bearer ${token}`,
             },
         });
         setSocket(newSocket)
