@@ -177,6 +177,23 @@ export default function Register(){
       </div>
     </div>
   </div>
+  <div className="mt-6">
+          <p className="text-center text-gray-500 text-sm mb-2">O Registrarse con: </p>
+          <div className="flex flex-col gap-3">
+            <a href={`${import.meta.env.VITE_BACKEND_URL}/auth/google`}
+            className="flex items-center justify-center gap-2 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition"
+            >
+              <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" className="w-5 h-5"/>
+              Google
+            </a>
+            <a href={`${import.meta.env.VITE_BACKEND_URL}/auth/facebook`}
+            className="flex items-center justify-center gap-2 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
+            >
+              <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook" className="w-5 h-5" />
+              Facebook
+              </a>
+              </div>
+        </div>
 
   <div className="w-full sm:w-1/2 h-1/3 sm:h-screen bg-[url('/freemp.jpeg')] bg-no-repeat bg-cover bg-center sm:block hidden"></div>
 </div>
