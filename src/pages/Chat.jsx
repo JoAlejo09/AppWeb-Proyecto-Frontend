@@ -6,7 +6,7 @@ import storeAuth  from "../store/storeAuth.jsx"; // si usas Zustand para datos d
 
 
 const Chat = () => {
-  const usuario = storeAuth((state) => state.usuario); // trae el usuario si lo tienes guardado
+  const usuario = storeAuth((state) => state.user); // trae el usuario si lo tienes guardado
   const [mensaje, setMensaje] = useState("");
   const [mensajes, setMensajes] = useState([]);
 
