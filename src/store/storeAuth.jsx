@@ -1,4 +1,3 @@
-// src/store/storeAuth.js
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -12,7 +11,12 @@ const storeAuth = create(
       logout: () => set({ token: null, user: null, rol: null }),
     }),
     {
-      name: 'auth-storage', // nombre de la clave en localStorage
+      name: 'auth-storage',
+      partialize: (state) => ({
+        token: state.token,
+        user: state.user,
+        rol: state.rol,
+      }),
     }
   )
 );
