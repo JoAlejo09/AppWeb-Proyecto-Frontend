@@ -1,38 +1,38 @@
 // src/pages/Chat.jsx
 import { useEffect, useState } from "react";
-import { socket } from "../services/socket.js";
+import { getSocket } from "../services/socket.js";
 import storeAuth from "../store/storeAuth.jsx";
 
 const Chat = () => {
   const usuario = storeAuth((state) => state.user);
   const [mensaje, setMensaje] = useState("");
   const [mensajes, setMensajes] = useState([]);
+  const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    if (!socket.connected) {
-      socket.connect();
-    }
+    const newSocket = getSocket();
+    setSocket(newSocket);
 
-    socket.on("connect", () => {
+    newSocket.on("connect", () => {
       console.log("Conectado al servidor Socket.io");
     });
 
-    socket.on("enviar-mensaje-front-back", (data) => {
+    newSocket.on("enviar-mensaje-front-back", (data) => {
       setMensajes((prev) => [...prev, data]);
     });
 
-    socket.on("disconnect", () => {
+    newSocket.on("disconnect", () => {
       console.log("Socket desconectado");
     });
 
     return () => {
-      socket.off("enviar-mensaje-front-back");
-      socket.disconnect();
+      newSocket.off("enviar-mensaje-front-back");
+      newSocket.disconnect();
     };
   }, []);
 
   const enviarMensaje = () => {
-    if (mensaje.trim() === "") return;
+    if (mensaje.trim() === "" || !socket) return;
 
     socket.emit("enviar-mensaje-front-back", {
       body: mensaje,
