@@ -1,10 +1,10 @@
 // src/pages/Chat.jsx
 import { useEffect, useState } from "react";
-import { socket } from "../socket"; // importa la instancia
-import { useAuthStore } from "../store/StoreAuth"; // si usas Zustand para datos del usuario
+import { socket } from "../services/socket"; // importa la instancia
+import { storeAuth } from "../store/storeAuth"; // si usas Zustand para datos del usuario
 
 const Chat = () => {
-  const usuario = useAuthStore((state) => state.usuario); // trae el usuario si lo tienes guardado
+  const usuario = storeAuth((state) => state.usuario); // trae el usuario si lo tienes guardado
   const [mensaje, setMensaje] = useState("");
   const [mensajes, setMensajes] = useState([]);
 
