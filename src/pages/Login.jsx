@@ -28,7 +28,7 @@ const Login = () => {
         }
       );
 
-      const rol = response.data.usuario?.rol;
+      const rol = data.rol;
       if (rol === "admin") {
         navigate("/admin");
       } else if (rol === "paciente") {
