@@ -82,7 +82,15 @@ export default function Register(){
           />
           {errors.apellido && <p className="text-red-600 text-sm">{errors.apellido.message}</p>}
         </div>
-
+        <div className="mb-3">
+          <label className="block text-sm font-semibold mb-1">Telefono (fijo o celular)</label>
+          <input
+            type="telefono"
+            {...register("telefono", { required: "Numero telefónico es obligatorio" })}
+            className="block w-full rounded-md border border-gray-300 px-2 py-1"
+          />
+          {errors.email && <p className="text-red-600 text-sm">{errors.email.message}</p>}
+        </div>
         <div className="mb-3">
           <label className="block text-sm font-semibold mb-1">Correo electrónico</label>
           <input

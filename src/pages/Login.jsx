@@ -5,20 +5,30 @@ import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
+import storeAuth from "../store/storeAuth";
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  
 
   const onSubmit = async (data) => {
     try {
+      const setAuth = storeAuth((state) => state.setAuth);
       const url = `${import.meta.env.VITE_BACKEND_URL}/usuarios/login`;
       const response = await axios.post(url, data);
       toast.success(response.data.msg || "Inicio de sesión exitoso");
-      localStorage.setItem("usuario", JSON.stringify(response.data.usuario));
+//      localStorage.setItem("usuario", JSON.stringify(response.data.usuario));
+      setAuth(
+        {
+          token: response.data.token,
+          user: response.data.usuario,
+          rol: response.data.rol || data.rol,
+        }
+      );
 
-      const rol = data.rol;
+      const rol = response.data.usuario?.rol;
       if (rol === "admin") {
         navigate("/admin");
       } else if (rol === "paciente") {
@@ -30,6 +40,7 @@ const Login = () => {
     }
   };
   const RedesSociales = ()=>{
+    const setAuth = storeAuth((state) => state.setAuth);
     const navigate = useNavigate();
 
     useEffect(()=>{
@@ -37,7 +48,10 @@ const Login = () => {
       const token = params.get("token");
 
       if(token){
-        localStorage.setItem("token", token);
+        setAuth({ token,
+          user:null,
+          rol: null,
+         });
         navigate("/paciente")
       }else{
         navigate("/login")
