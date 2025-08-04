@@ -1,22 +1,36 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import storeAuth from '../context/storeAuth.jsx';
+import storeAuth from '../store/storeAuth';
+import {jwtDecode} from 'jwt-decode'; 
 
 const OAuthSuccess = () => {
   const navigate = useNavigate();
-  const { setToken } = storeAuth();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get('token');
 
-    if (token) {
-      setToken(token);
-      // Podrías decodificar el token con jwt-decode para extraer rol, nombre, etc.
-      navigate('/dashboard');
-    } else {
-      navigate('/login');
-    }
+    if(token){
+        try{
+          const decoded = jwtDecode(token);
+          console.log(decoded)
+           storeAuth({
+            token,
+            user: {
+              nombre: decoded.nombre || "",
+              email: decoded.email || "",
+            },
+          rol: decoded.rol || "paciente", // fallback a 'paciente'
+        });
+        
+        navigate("/paciente")
+        }catch(error){
+          console.error("Error al decodificar el token:", error);
+          navigate("/login");
+        }
+      }else{
+        navigate("/login")
+      }
   }, []);
 
   return <p>Procesando inicio de sesión...</p>;
