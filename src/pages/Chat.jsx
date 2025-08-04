@@ -19,7 +19,7 @@ const Chat = () => {
       console.log("Conectado al servidor Socket.io");
     });
 
-    socket.on("mensaje", (data) => {
+    socket.on("enviar-mensaje-front-back", (data) => {
       setMensajes((prev) => [...prev, data]);
     });
 
@@ -28,7 +28,7 @@ const Chat = () => {
     });
 
     return () => {
-      socket.off("mensaje");
+      socket.off("enviar-mensaje-front-back");
       socket.disconnect();
     };
   }, []);
@@ -36,7 +36,7 @@ const Chat = () => {
   const enviarMensaje = () => {
     if (mensaje.trim() === "") return;
 
-    socket.emit("mensaje", {
+    socket.emit("enviar-mensaje-front-back", {
       de: usuario?.nombre || "Anónimo",
       mensaje,
     });
