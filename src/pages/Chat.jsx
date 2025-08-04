@@ -1,6 +1,6 @@
 // src/pages/Chat.jsx
 import { useEffect, useState } from "react";
-import { socket } from "../socket"; // importa la instancia
+import { socket } from "../services/socket"; // importa la instancia
 import { useAuthStore } from "../store/StoreAuth"; // si usas Zustand para datos del usuario
 
 const Chat = () => {
