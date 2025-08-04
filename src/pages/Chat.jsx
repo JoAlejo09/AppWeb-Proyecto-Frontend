@@ -32,7 +32,13 @@ const Chat = () => {
     }
 
     useEffect(() => {
-        const newSocket = io("http://localhost:300https://mentalapp-backend-rqqe.onrender.com");
+          const token = localStorage.getItem("token"); // o desde stwworeAuth
+
+        const newSocket = io("https://mentalapp-backend-rqqe.onrender.com",{
+            auth:{
+                token,
+            },
+        });
         setSocket(newSocket)
         newSocket.on("enviar-mensaje-front-back", (payload) => {
             setResponses((prev) => [...prev, payload])
