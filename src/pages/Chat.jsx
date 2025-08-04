@@ -34,7 +34,7 @@ const Chat = () => {
     useEffect(() => {
           const token = localStorage.getItem("token"); // o desde stwworeAuth
 
-        const newSocket = io("https://app-web-proyecto-frontend.vercel.app",{
+        const newSocket = io("https://mentalapp-backend-rqqe.onrender.com",{
             auth:{
                 token,
             },
