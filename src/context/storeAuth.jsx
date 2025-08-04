@@ -5,20 +5,20 @@ const storeAuth = create(
     persist(
         (set)=>({
             token:null,
-            usuario:null,
+            nombre:null,
             rol:null,
 
             setToken: (token)=> set({token}),
-            setUsuario: (usuario) => set ({usuario}),
+            setNombre: (nombre) => set ({nombre}),
             setRol: (rol)=>set({rol}),
 
-            clearAuth: () => set({ token: null, usuario: null, rol: null }),
+            clearAuth: () => set({ token: null, nombre: null, rol: null }),
         }),
         {
             name: "auth", // clave en localStorage
             partialize: (state) => ({
                 token: state.token,
-                usuario: state.usuario,
+                nombre: state.usuario,
                 rol: state.rol,
             }), 
         }

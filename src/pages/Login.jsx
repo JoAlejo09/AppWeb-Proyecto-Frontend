@@ -5,10 +5,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
-import {jwtDecode} from 'jwt-decode'; 
-import storeAuth from "../store/storeAuth"; // Importa tu store de Zustand
-
-
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -41,24 +37,8 @@ const Login = () => {
       const token = params.get("token");
 
       if(token){
-        try{
-          const decoded = jwtDecode(token);
-          console.log(decoded)
-           storeAuth({
-            token,
-            user: {
-              nombre: decoded.nombre || "",
-              email: decoded.email || "",
-            },
-          rol: decoded.rol || "paciente", // fallback a 'paciente'
-        });
-        
+        localStorage.setItem("token", token);
         navigate("/paciente")
-        }catch(error){
-          console.error("Error al decodificar el token:", error);
-          toast.error("Token inválido o expirado");
-          navigate("/login");
-        }
       }else{
         navigate("/login")
       }
