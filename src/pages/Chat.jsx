@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { socket } from "../services/socket"; // importa la instancia
 import { storeAuth } from "../store/storeAuth"; // si usas Zustand para datos del usuario
 
+
+
 const Chat = () => {
   const usuario = storeAuth((state) => state.usuario); // trae el usuario si lo tienes guardado
   const [mensaje, setMensaje] = useState("");
