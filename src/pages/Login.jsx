@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import {jwtDecode} from 'jwt-decode'; 
+import storeAuth from "../store/storeAuth"; // Importa tu store de Zustand
 
 
 
@@ -43,7 +44,14 @@ const Login = () => {
         try{
           const decoded = jwtDecode(token);
           console.log(decoded)
-          localStorage.setItem("usuario", JSON.stringify(decoded));
+           storeAuth({
+            token,
+            user: {
+              nombre: decoded.nombre || "",
+              email: decoded.email || "",
+            },
+          rol: decoded.rol || "paciente", // fallback a 'paciente'
+        });
         
         navigate("/paciente")
         }catch(error){
