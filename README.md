@@ -6,7 +6,9 @@ Este proyecto corresponde al desarrollo de un aplicación web desarrollado en ME
 - José Pila
 - Johan Cardenas
   
-**Descripción:** El proyecto esta enfocado en el desarrollo de una aplicación web accesible por los estudiantes de la EPN. Cuyo propósito es proporcionar información y recursos para el manejo de su salud mental durante su instancia en la institución.  **Version**: 1.0.0  
+**Descripción:** El proyecto esta enfocado en el desarrollo de una aplicación web accesible por los estudiantes de la EPN. Cuyo propósito es proporcionar información y recursos para el manejo de su salud mental durante su instancia en la institución.
+    
+**Version**: 1.0.0  
 
 Para información del Componente Backend puede dar [click aqui](https://github.com/JoAlejo09/AppWeb-Proyecto-Backend.git)
 
