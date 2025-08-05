@@ -56,13 +56,16 @@ const Chat = () => {
             {responses.map((response, index) => (
               <div
                 key={index}
-                className={`my-2 p-2 text-sm rounded-md text-white ${
-                  response.from === nameUser ? "bg-blue-600 self-end" : "bg-gray-700 self-start"
-                }`}
-              >
-                <strong>{response.from}:</strong> {response.body}
-              </div>
-            ))}
+                className={`my-2 p-2 text-sm rounded-md text-white max-w-xs
+                  ${response.from === nameUser
+                ? "bg-blue-600 self-end text-right"
+                : "bg-gray-700 self-start text-left"
+              }`}
+          style={{ alignSelf: response.from === nameUser ? "flex-end" : "flex-start" }}
+        >
+          <strong>{response.from}:</strong> {response.body}
+    </div>
+          ))}
           </div>
           <div className="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
             <form onSubmit={handleSubmit(handleMessageChat)}>
