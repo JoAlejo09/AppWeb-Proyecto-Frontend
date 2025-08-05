@@ -8,7 +8,19 @@ const Chat = () => {
   const [chat,setChat] = useState('');
   const [nameUser, setNameUser] = useState('');
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
-
+  useEffect(() => {
+        const usuario = JSON.parse(localStorage.getItem("usuario"));
+    if(usuario && usuario.rol){
+      if(usuario.rol === "admin"){
+        setNameUser('admin')
+        setChat(false);
+      }else if(usuario.rol === "user"){
+        setNameUser(usuario.name);
+        setChat(true);
+      }
+    }
+  },[]);
+  
   const handleEnterChat = (data) => {
     setNameUser(data.name);
     setChat(data.chat);
