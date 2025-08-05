@@ -14,7 +14,7 @@ const Chat = () => {
       if(usuario.rol === "admin"){
         setNameUser('admin')
         setChat(false);
-      }else if(usuario.rol === "user"){
+      }else if(usuario.rol === "paciente"){
         setNameUser(usuario.nombre);
         setChat(true);
       }
