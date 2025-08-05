@@ -25,7 +25,9 @@ const Chat = () => {
     reset({message:""});
   };
   useEffect(() => {
-    const newSocket = io(import.meta.env.VITE_BACKEND_URL || "http://localhost:3000");
+    const newSocket = io(import.meta.env.VITE_BACKEND_URL || "http://localhost:3000",{
+      transports: ['polling']
+    });
     setSocket(newSocket);
     newSocket.on("enviar-mensaje-front-back", (payload) => {
       setResponses(prev => [...prev, payload]);
