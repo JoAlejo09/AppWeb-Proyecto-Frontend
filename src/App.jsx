@@ -16,6 +16,7 @@ import Confirm from "./pages/Confirm";
 import RedesSociales from "./pages/RedesSociales";
 import OAuthSuccess from "./pages/OAuthSuccess";
 import Chat from "./pages/Chat";
+import Details from "./pages/Details";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/redes-sociales" element={<RedesSociales />} />
         <Route path="/oauth-success" element={<OAuthSuccess/>}/>
         <Route path="/usuarios/chat" element={<Chat />} />
+        <Route path="agendar/citas" element={<Details/>}/>
         
 
 
