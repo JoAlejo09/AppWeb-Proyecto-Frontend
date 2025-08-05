@@ -15,12 +15,12 @@ const Chat = () => {
         setNameUser('admin')
         setChat(false);
       }else if(usuario.rol === "user"){
-        setNameUser(usuario.name);
+        setNameUser(usuario.nombre);
         setChat(true);
       }
     }
   },[]);
-  
+
   const handleEnterChat = (data) => {
     setNameUser(data.name);
     setChat(data.chat);
