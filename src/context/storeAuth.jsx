@@ -18,7 +18,7 @@ const storeAuth = create(
             name: "usuario", // clave en localStorage
             partialize: (state) => ({
                 token: state.token,
-                nombre: state.usuario,
+                nombre: state.name,
                 rol: state.rol,
             }), 
         }
