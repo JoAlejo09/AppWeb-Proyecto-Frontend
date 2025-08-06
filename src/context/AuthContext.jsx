@@ -23,6 +23,7 @@ localStorage.setItem("usuario", JSON.stringify(datos));
 const logout = () => {
 setUsuario(null);
 localStorage.removeItem("usuario");
+localStorage.removeItem("auth")
 };
 
 return (
