@@ -41,7 +41,7 @@ function App() {
         <Route path="/redes-sociales" element={<RedesSociales />} />
         <Route path="/oauth-success" element={<OAuthSuccess />} />
         <Route path="/usuarios/chat" element={<Chat />} />
-
+        <Route path="/cita" element={<Elements stripe={stripePromise}><Cita /></Elements>}/>    
         {/* Privadas - admin */}
         <Route
           path="/admin"
@@ -61,16 +61,7 @@ function App() {
         />
 
         {/* Privada - paciente - agendar cita y pagar */}
-        <Route
-          path="/cita"
-          element={
-            <RutaProtegida rol="paciente">
-              <Elements stripe={stripePromise}>
-                <Cita />
-              </Elements>
-            </RutaProtegida>
-          }
-        />
+        
       </Routes>
     </Router>
   );
