@@ -136,7 +136,7 @@ import axios from "axios";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { toast } from "react-toastify";
 
-const AgendarCita = () => {
+const Cita = () => {
 const [fecha, setFecha] = useState("");
 const [hora, setHora] = useState("");
 const [motivo, setMotivo] = useState("");
@@ -254,4 +254,4 @@ Editar
 );
 };
 
-export default AgendarCita;
+export default Cita;

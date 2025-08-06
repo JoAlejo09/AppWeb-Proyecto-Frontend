@@ -1,4 +1,3 @@
-// src/App.jsx
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -16,13 +15,21 @@ import Confirm from "./pages/Confirm";
 import RedesSociales from "./pages/RedesSociales";
 import OAuthSuccess from "./pages/OAuthSuccess";
 import Chat from "./pages/Chat";
+import Cita from "./pages/Cita"; // componente donde se hace el pago
+
+// Stripe
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+// Carga tu clave pública
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 function App() {
   return (
     <Router>
-      <Navbar /> {/* Menú visible en todas las páginas */}
+      <Navbar />
       <Routes>
-        {/* Páginas Públicas */}
+        {/* Públicas */}
         <Route path="/" element={<Main />} />
         <Route path="/informacion" element={<Informacion />} />
         <Route path="/login" element={<Login />} />
@@ -30,14 +37,12 @@ function App() {
         <Route path="/admin/activar/:token" element={<Active />} />
         <Route path="/recuperar" element={<Recuperar />} />
         <Route path="/nuevo-password/:token" element={<NuevoPassword />} />
-        <Route path="/pacientes/confirmar/:token" element={<Confirm/>}/>
+        <Route path="/pacientes/confirmar/:token" element={<Confirm />} />
         <Route path="/redes-sociales" element={<RedesSociales />} />
-        <Route path="/oauth-success" element={<OAuthSuccess/>}/>
-        <Route path="/usuarios/chat" element={<Chat />} />        
+        <Route path="/oauth-success" element={<OAuthSuccess />} />
+        <Route path="/usuarios/chat" element={<Chat />} />
 
-
-        {/* Páginas Privadas (solo admins autenticados) */}
-        
+        {/* Privadas - admin */}
         <Route
           path="/admin"
           element={
@@ -51,6 +56,18 @@ function App() {
           element={
             <RutaProtegida rol="admin">
               <PerfilAdmin />
+            </RutaProtegida>
+          }
+        />
+
+        {/* Privada - paciente - agendar cita y pagar */}
+        <Route
+          path="/cita"
+          element={
+            <RutaProtegida rol="paciente">
+              <Elements stripe={stripePromise}>
+                <Cita />
+              </Elements>
             </RutaProtegida>
           }
         />
