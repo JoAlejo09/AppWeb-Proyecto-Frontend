@@ -9,7 +9,7 @@ const Navbar = () => {
   
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate("/");
   }
    return (
     <header className="bg-white shadow-sm border-b border-gray-200">
