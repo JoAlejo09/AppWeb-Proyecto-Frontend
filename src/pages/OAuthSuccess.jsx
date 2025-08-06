@@ -17,10 +17,6 @@ const OAuthSuccess = () => {
 
       const decoded = jwtDecode(token);
       setNombre(decoded.name || "");
-      setRol(decoded.rol || "paciente");
-
-      localStorage.setItem('nombre', decoded.name || "");
-      localStorage.setItem('rol', decoded.rol || "paciente");
 
       // Si quieres guardar el usuario completo:
       localStorage.setItem('usuario', JSON.stringify(decoded));
