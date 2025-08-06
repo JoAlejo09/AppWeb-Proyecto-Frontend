@@ -168,7 +168,7 @@ try {
 
   // Supongamos que el costo de una cita es 20 USD
   const cantidad = 2000; // en centavos
-  const response = await axios.post("/api/citas", {
+  const response = await axios.post("/pacientes/agendar", {
     fecha,
     hora,
     motivo,
