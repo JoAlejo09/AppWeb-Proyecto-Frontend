@@ -17,6 +17,7 @@ const Login = () => {
       const response = await axios.post(url, data);
       toast.success(response.data.msg || "Inicio de sesión exitoso");
       localStorage.setItem("usuario", JSON.stringify(response.data.usuario));
+      localStorage.setItem("token",JSON.stringify(response.data.token))
 
       const rol = data.rol;
       if (rol === "admin") {
