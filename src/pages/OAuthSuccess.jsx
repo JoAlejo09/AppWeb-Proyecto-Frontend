@@ -15,11 +15,11 @@ const OAuthSuccess = () => {
       setToken(token);
       localStorage.setItem('token', token);
 
-      const decoded = jwtDecode(token);
-      setNombre(decoded.name || "");
+//      const decoded = jwtDecode(token);
+ //     setNombre(decoded.name || "");
 
       // Si quieres guardar el usuario completo:
-      localStorage.setItem('usuario', JSON.stringify(decoded));
+//      localStorage.setItem('usuario', JSON.stringify(decoded));
 
       // Redirige según el rol
       if (decoded.rol === "admin") {
