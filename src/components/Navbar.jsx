@@ -17,6 +17,23 @@ const Navbar = () => {
         <Link to="/" className="text-2xl font-bold text-purple-700">
           MentalAPP
         </Link>
+        <ul className="flex items-center space-x-6 text-gray-700 font-medium">
+          <li>
+            <Link to="/" className="hover:text-purple-600 transition">
+              Inicio
+            </Link>
+          </li>
+          <li>
+            <Link to="/informacion" className="hover:text-purple-600 transition">
+              Información
+            </Link>
+          </li>
+          <li>
+            <Link to="/contacto" className="hover:text-purple-600 transition">
+              Contacto
+            </Link>
+          </li>
+
           {!usuario ? (
             <>
               <li>
@@ -51,6 +68,7 @@ const Navbar = () => {
               </li>
             </>
           )}
+        </ul>
       </nav>
     </header>
   );
