@@ -15,7 +15,7 @@ import Confirm from "./pages/Confirm";
 import RedesSociales from "./pages/RedesSociales";
 import OAuthSuccess from "./pages/OAuthSuccess";
 import Chat from "./pages/Chat";
-import Cita from "./pages/Cita"; // componente donde se hace el pago
+import Cita from "./pages/Cita"; 
 
 // Stripe
 import { Elements } from "@stripe/react-stripe-js";
@@ -65,7 +65,7 @@ function App() {
           path="/paciente"
           element={
             <RutaProtegida rol = "paciente">
-              <DashboardPaciente />
+              
               </RutaProtegida>
           }
         />
