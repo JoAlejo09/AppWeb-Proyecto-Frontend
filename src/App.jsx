@@ -9,7 +9,7 @@ import DashboardAdmin from "./pages/DashboardAdmin";
 import Active from "./pages/Active";
 import Recuperar from "./pages/Recuperar";
 import NuevoPassword from "./pages/NuevoPassword";
-import RutaProtegida from "./components/RutaProtegida";
+import RutaProtegida from "./routes/RutaProtegida";
 import PerfilAdmin from "./pages/admin/PerfilAdmin";
 import Confirm from "./pages/Confirm";
 import RedesSociales from "./pages/RedesSociales";
