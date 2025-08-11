@@ -2,15 +2,20 @@ import { Navigate } from "react-router-dom";
 import storeAuth from "../context/storeAuth.jsx";
 
 const RutaProtegida = ({ children, rol }) => {
-  const { token, rol: rolUsuario } = storeAuth();
+  const token = storeAuth(state => state.token);
+  const rolUsuario = storeAuth(state => state.rol);
 
-  if (!token || rolUsuario !== rol) {
-    return null;
-    }
-  if(rolUsuario!==rol){
-        return <Navigate to="/login" replace />;
+  // No autenticado
+  if (!token) {
+    return <Navigate to="/login" replace />;
   }
 
+  // Autenticado pero rol incorrecto
+  if (rolUsuario !== rol) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // Autenticado y con rol correcto
   return children;
 };
 
