@@ -4,25 +4,31 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useEffect } from "react";
-import { useAuth } from "../context/AuthContext";
+import storeAuth from "../context/storeAuth"; // <-- nuevo store
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
-  const {login} = useAuth
+  // Acceder al store
+  const setToken = storeAuth((state) => state.setToken);
+  const setNombre = storeAuth((state) => state.setNombre);
+  const setRol = storeAuth((state) => state.setRol);
 
   const onSubmit = async (data) => {
     try {
       const url = `${import.meta.env.VITE_BACKEND_URL}/usuarios/login`;
       const response = await axios.post(url, data);
-      toast.success(response.data.msg || "Inicio de sesión exitoso");
-      login(response.data.usuario, response.data.token);
-      localStorage.setItem("usuario", JSON.stringify(response.data.usuario));
-      localStorage.setItem("token",JSON.stringify(response.data.token))
 
+      toast.success(response.data.msg || "Inicio de sesión exitoso");
+
+      // Guardar en Zustand
+      setToken(response.data.token);
+      setNombre(response.data.usuario.nombre);
+      setRol(response.data.usuario.rol);
+
+      // Redirigir según rol
       const rol = response.data.usuario.rol;
       if (rol === "admin") {
         navigate("/admin");
@@ -39,14 +45,16 @@ const Login = () => {
     <div className="flex flex-col sm:flex-row h-screen">
       <ToastContainer />
 
-      {/* Imagen a la izquierda */}
+      {/* Imagen */}
       <div className="w-full sm:w-1/2 h-1/3 sm:h-screen bg-[url('/bg-register.jpeg')] bg-no-repeat bg-cover bg-center sm:block hidden"></div>
 
       {/* Formulario */}
       <div className="w-full sm:w-1/2 h-screen bg-white flex justify-center items-center">
         <div className="md:w-4/5 sm:w-full">
           <h1 className="text-3xl font-semibold mb-2 text-center uppercase text-gray-500">Iniciar sesión</h1>
-          <small className="text-gray-400 block my-4 text-sm text-center">Selecciona tu rol e ingresa tus datos</small>
+          <small className="text-gray-400 block my-4 text-sm text-center">
+            Selecciona tu rol e ingresa tus datos
+          </small>
 
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* Rol */}
@@ -93,42 +101,45 @@ const Login = () => {
               </button>
             </div>
 
-            {/* Botón enviar */}
+            {/* Botón */}
             <button className="bg-purple-700 text-white w-full py-2 rounded-md mt-4 hover:bg-purple-900 transition">
               Iniciar sesión
             </button>
           </form>
 
-          {/* Enlaces inferiores */}
+          {/* Recuperar contraseña */}
           <div className="mt-6 text-xs border-b-2 py-4"></div>
-
           <div className="mt-3 text-sm flex justify-between items-center">
             <p>¿Olvidaste tu contraseña?</p>
             <Link to="/recuperar" className="py-2 px-4 bg-gray-500 text-white rounded-md hover:bg-gray-900 transition">
               Recuperar
             </Link>
           </div>
-      <div className="mt-6">
-        <p className="text-center text-gray-500 text-sm mb-2">O inicia sesión con</p>
-        <div className="flex flex-col gap-3">
-          <a href={`${import.meta.env.VITE_BACKEND_URL}/auth/google`}
-          className="flex items-center justify-center gap-2 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition"
-          >
-            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" className="w-5 h-5"/>
-            Google
-          </a>
-          <a href={`${import.meta.env.VITE_BACKEND_URL}/auth/facebook`}
-          className="flex items-center justify-center gap-2 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
-          >
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook" className="w-5 h-5" />
-            Facebook
-            </a>
+
+          {/* Login social */}
+          <div className="mt-6">
+            <p className="text-center text-gray-500 text-sm mb-2">O inicia sesión con</p>
+            <div className="flex flex-col gap-3">
+              <a
+                href={`${import.meta.env.VITE_BACKEND_URL}/auth/google`}
+                className="flex items-center justify-center gap-2 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition"
+              >
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" className="w-5 h-5"/>
+                Google
+              </a>
+              <a
+                href={`${import.meta.env.VITE_BACKEND_URL}/auth/facebook`}
+                className="flex items-center justify-center gap-2 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
+              >
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook" className="w-5 h-5" />
+                Facebook
+              </a>
             </div>
+          </div>
+        </div>
       </div>
     </div>
-    </div>
-      </div>
   );
-}; 
+};
 
 export default Login;

@@ -15,10 +15,10 @@ const storeAuth = create(
             clearAuth: () => set({ token: null, nombre: null, rol: null }),
         }),
         {
-            name: "usuario", // clave en localStorage
+            name: "usuario", 
             partialize: (state) => ({
                 token: state.token,
-                nombre: state.name,
+                nombre: state.nombre,
                 rol: state.rol,
             }), 
         }
