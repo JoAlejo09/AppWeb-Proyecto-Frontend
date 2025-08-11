@@ -5,21 +5,25 @@ import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
+  const {login} = useAuth
+
   const onSubmit = async (data) => {
     try {
       const url = `${import.meta.env.VITE_BACKEND_URL}/usuarios/login`;
       const response = await axios.post(url, data);
       toast.success(response.data.msg || "Inicio de sesión exitoso");
+      login(response.data.usuario, response.data.token);
       localStorage.setItem("usuario", JSON.stringify(response.data.usuario));
       localStorage.setItem("token",JSON.stringify(response.data.token))
 
-      const rol = data.rol;
+      const rol = response.data.usuario.rol;
       if (rol === "admin") {
         navigate("/admin");
       } else if (rol === "paciente") {

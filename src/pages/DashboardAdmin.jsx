@@ -14,12 +14,6 @@ const DashboardAdmin = () => {
     }
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("usuario");
-    localStorage.removeItem("token");
-    navigate("/");
-  };
-
   return (
     <div style={styles.container}>
       {/* Menú lateral */}
@@ -40,7 +34,6 @@ const DashboardAdmin = () => {
         {/* Franja superior */}
         <div style={styles.userBar}>
           <span>👤 {usuario.nombre} — Rol: {usuario.rol}</span>
-          <button onClick={handleLogout} style={styles.logoutButton}>Cerrar sesión</button>
         </div>
 
         <section style={styles.content}>
