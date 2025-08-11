@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 const DashboardAdmin = () => {
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState({ nombre: "", rol: "" });
+  const [openMenu, setOpenMenu] = useState(null); // Controla qué submenú está abierto
 
   useEffect(() => {
     const userData = localStorage.getItem("usuario");
@@ -14,18 +15,97 @@ const DashboardAdmin = () => {
     }
   }, []);
 
+  const toggleMenu = (menuName) => {
+    setOpenMenu(openMenu === menuName ? null : menuName);
+  };
+
   return (
     <div style={styles.container}>
       {/* Menú lateral */}
       <aside style={styles.sidebar}>
         <h2 style={styles.logo}>AdminPanel</h2>
         <nav style={styles.nav}>
-          <a style={styles.link} href="#">Inicio</a>
-          <a style={styles.link} href="#">Gestión de Pacientes</a>
-          <a style={styles.link} href="#">Recursos</a>
-          <a style={styles.link} href="#">Cuestionarios</a>
-          <a style={styles.link} href="#">Alertas</a>
-          <a style={styles.link} href="#">Reportes</a>
+
+          {/* Perfil */}
+          <div>
+            <div style={styles.link} onClick={() => toggleMenu("perfil")}>
+              Perfil ▾
+            </div>
+            {openMenu === "perfil" && (
+              <div style={styles.submenu}>
+                <a style={styles.sublink} onClick={() => navigate("/admin/perfil")}>
+                  Visualizar Perfil
+                </a>
+                <a style={styles.sublink} onClick={() => navigate("/admin/cambiar-password")}>
+                  Cambiar Contraseña
+                </a>
+              </div>
+            )}
+          </div>
+
+          {/* Gestión de Pacientes */}
+          <div>
+            <div style={styles.link} onClick={() => toggleMenu("pacientes")}>
+              Gestión de Pacientes ▾
+            </div>
+            {openMenu === "pacientes" && (
+              <div style={styles.submenu}>
+                <a style={styles.sublink} onClick={() => navigate("/admin/pacientes")}>
+                  Listar Pacientes
+                </a>
+                <a style={styles.sublink} onClick={() => navigate("/admin/paciente/visualizar")}>
+                  Visualizar Paciente
+                </a>
+                <a style={styles.sublink} onClick={() => navigate("/admin/paciente/baja")}>
+                  Dar de Baja Paciente
+                </a>
+              </div>
+            )}
+          </div>
+
+          {/* Recursos */}
+          <div>
+            <div style={styles.link} onClick={() => toggleMenu("recursos")}>
+              Recursos ▾
+            </div>
+            {openMenu === "recursos" && (
+              <div style={styles.submenu}>
+                <a style={styles.sublink} onClick={() => navigate("/admin/recursos")}>
+                  Visualizar Recursos
+                </a>
+                <a style={styles.sublink} onClick={() => navigate("/admin/recursos/crear")}>
+                  Crear Recurso
+                </a>
+                <a style={styles.sublink} onClick={() => navigate("/admin/recursos/eliminar")}>
+                  Eliminar Recurso
+                </a>
+              </div>
+            )}
+          </div>
+
+          {/* Reportes */}
+          <div>
+            <div style={styles.link} onClick={() => toggleMenu("reportes")}>
+              Reportes ▾
+            </div>
+            {openMenu === "reportes" && (
+              <div style={styles.submenu}>
+                <a style={styles.sublink} onClick={() => navigate("/admin/reportes")}>
+                  Visualizar Reportes
+                </a>
+                <a style={styles.sublink} onClick={() => navigate("/admin/reportes/crear")}>
+                  Crear Reporte
+                </a>
+                <a style={styles.sublink} onClick={() => navigate("/admin/reportes/eliminar")}>
+                  Eliminar Reporte
+                </a>
+              </div>
+            )}
+          </div>
+
+          {/* Otros enlaces */}
+          <a style={styles.link} onClick={() => navigate("/admin/chat")}>Chat</a>
+          <a style={styles.link} onClick={() => navigate("/admin/citas")}>Citas</a>
         </nav>
       </aside>
 
@@ -72,6 +152,21 @@ const styles = {
     textDecoration: "none",
     fontSize: "1rem",
     cursor: "pointer",
+    display: "block",
+    padding: "8px 0",
+  },
+  submenu: {
+    display: "flex",
+    flexDirection: "column",
+    paddingLeft: "15px",
+    marginTop: "5px",
+    gap: "5px",
+  },
+  sublink: {
+    color: "#bdc3c7",
+    fontSize: "0.9rem",
+    cursor: "pointer",
+    textDecoration: "none",
   },
   main: {
     flex: 1,
@@ -85,14 +180,6 @@ const styles = {
     justifyContent: "space-between",
     alignItems: "center",
     boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
-  },
-  logoutButton: {
-    backgroundColor: "#e74c3c",
-    color: "#fff",
-    border: "none",
-    padding: "10px 16px",
-    borderRadius: "8px",
-    cursor: "pointer",
   },
   content: {
     padding: "30px",

@@ -60,8 +60,15 @@ function App() {
           }
         />
 
-        {/* Privada - paciente - agendar cita y pagar */}
-        
+        {/* Privada - paciente */}
+        <Route
+          path="/paciente"
+          element={
+            <RutaProtegida rol = "paciente">
+              <DashboardPaciente />
+              </RutaProtegida>
+          }
+        />
       </Routes>
     </Router>
   );
