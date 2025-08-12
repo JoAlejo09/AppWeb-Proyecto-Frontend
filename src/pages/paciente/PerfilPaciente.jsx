@@ -3,22 +3,26 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import storeAuth from "../../context/storeAuth.jsx"; // <- tu store Zustand
 
 const PerfilPaciente = () => {
+  // Traemos el token y el setter del nombre desde el store
+  const { token, nombre: nombreStore, setNombre } = storeAuth();
+
   const [cargando, setCargando] = useState(true);
   const [pacienteId, setPacienteId] = useState(null);
 
+  // Para avatar
   const [avatarUrl, setAvatarUrl] = useState("");
-  const [file, setFile] = useState(null);
-  const [preview, setPreview] = useState("");
+  const [file, setFile] = useState(null);      // archivo seleccionado
+  const [preview, setPreview] = useState("");  // preview local
 
   const { register, handleSubmit, setValue, watch } = useForm();
   const imagenArchivo = watch("imagenArchivo");
 
   useEffect(() => {
-    const token = localStorage.getItem("token")?.replaceAll('"', "");
     if (!token) {
-      toast.error("No hay token, inicia sesión nuevamente");
+      toast.error("No hay token, inicia sesión nuevamente.");
       return;
     }
 
@@ -29,16 +33,21 @@ const PerfilPaciente = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        // OJO: si tu backend envía _id en vez de id, cámbialo por data._id
+        // OJO: usa data.id si tu backend lo manda así, sino data._id
         setPacienteId(data.id || data._id);
 
+        // Seteamos los campos del formulario
         setValue("nombre", data.nombre || "");
         setValue("apellido", data.apellido || "");
         setValue("email", data.email || "");
         setValue("telefono", data.telefono || "");
 
+        // Foto: primero Cloudinary, luego IA, o placeholder
         const foto = data.imagen || data.imagenIA || "/avatar-placeholder.jpg";
         setAvatarUrl(foto);
+
+        // sincronizamos el nombre con el store (opcional)
+        if (data.nombre) setNombre(data.nombre);
 
         setCargando(false);
       } catch (error) {
@@ -47,9 +56,9 @@ const PerfilPaciente = () => {
         setCargando(false);
       }
     })();
-  }, [setValue]);
+  }, [token, setValue, setNombre]);
 
-  // Preview de la imagen local
+  // Preview de archivo seleccionado con react-hook-form
   useEffect(() => {
     const f = imagenArchivo?.[0];
     if (!f) return;
@@ -67,9 +76,8 @@ const PerfilPaciente = () => {
   };
 
   const onSubmit = async (formData) => {
-    const token = localStorage.getItem("token")?.replaceAll('"', "");
     if (!token) {
-      toast.error("No hay token, inicia sesión nuevamente");
+      toast.error("No hay token, inicia sesión nuevamente.");
       return;
     }
     if (!pacienteId) {
@@ -80,16 +88,16 @@ const PerfilPaciente = () => {
     try {
       const url = `${import.meta.env.VITE_BACKEND_URL}/pacientes/perfil/${pacienteId}`;
 
-      // Si hay archivo, usar multipart/form-data
+      // Si hay archivo, usamos multipart/form-data
       if (file || formData.imagenArchivo?.[0]) {
         const fd = new FormData();
         fd.append("nombre", formData.nombre || "");
         fd.append("apellido", formData.apellido || "");
         fd.append("telefono", formData.telefono || "");
-        // email normalmente lo dejas inmutable:
+        // email normalmente NO se cambia, pero si tu backend lo permite:
         fd.append("email", formData.email || "");
 
-        // el campo en backend debe ser req.files.imagen
+        // campo 'imagen' debe coincidir con req.files.imagen en el backend
         fd.append("imagen", file || formData.imagenArchivo[0]);
 
         const { data } = await axios.put(url, fd, {
@@ -101,18 +109,24 @@ const PerfilPaciente = () => {
 
         toast.success(data.msg || "Perfil actualizado");
 
-        // Si backend devuelve la nueva url de imagen:
-        if (data?.usuario?.imagen || data?.usuario?.imagenIA) {
-          setAvatarUrl(data.usuario.imagen || data.usuario.imagenIA);
+        // si el backend devuelve la nueva url, refrescamos
+        const nueva = data?.usuario?.imagen || data?.usuario?.imagenIA;
+        if (nueva) {
+          setAvatarUrl(nueva);
           setPreview("");
           setFile(null);
         }
+
+        // sincroniza nombre en el store
+        if (data?.usuario?.nombre) setNombre(data.usuario.nombre);
+
       } else {
-        // Sin archivo → JSON
+        // Sin archivo -> JSON normal
         const payload = {
           nombre: formData.nombre || "",
           apellido: formData.apellido || "",
           telefono: formData.telefono || "",
+          // email sólo si lo vas a permitir cambiar
           email: formData.email || "",
         };
 
@@ -123,6 +137,7 @@ const PerfilPaciente = () => {
         });
 
         toast.success(data.msg || "Perfil actualizado");
+        if (data?.usuario?.nombre) setNombre(data.usuario.nombre);
       }
     } catch (error) {
       console.error(error);
@@ -135,6 +150,7 @@ const PerfilPaciente = () => {
   return (
     <div className="max-w-xl mx-auto bg-white rounded shadow p-5">
       <h2 className="text-xl font-bold mb-4">Mi Perfil</h2>
+
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Avatar */}
         <div className="flex items-center gap-4">
@@ -154,10 +170,13 @@ const PerfilPaciente = () => {
               {...register("imagenArchivo")}
               className="block w-full text-sm"
             />
-            {preview && <small className="text-gray-500">Previsualización lista</small>}
+            {preview && (
+              <small className="text-gray-500">Previsualización lista</small>
+            )}
           </div>
         </div>
 
+        {/* Datos */}
         <div>
           <label className="block text-sm">Nombre</label>
           <input {...register("nombre")} className="w-full border px-2 py-1 rounded" />
