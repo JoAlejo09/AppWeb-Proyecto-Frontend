@@ -68,7 +68,7 @@ function App() {
         <Route path="perfil" element={<PerfilAdmin />} />
         <Route path="perfil/password" element={<CambiarPassword />} />    
         {/* Pacientes */}
-          <Route path="pacientes/listar" element={<PacientesListar />} />
+          <Route path="pacientes" element={<PacientesListar />} />
           <Route path="pacientes/ver" element={<PacienteVer />} />
           <Route path="pacientes/baja" element={<PacienteBaja />} />
 

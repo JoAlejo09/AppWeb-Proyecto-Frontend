@@ -72,7 +72,7 @@ const AdminLayout = () => {
           </button>
           {openMenu === "pacientes" && (
             <div className="mt-1">
-              <NavLink to="/admin/pacientes/listar" className={subLinkClass}>
+              <NavLink to="/admin/pacientes" className={subLinkClass}>
                 Listar Pacientes
               </NavLink>
               <NavLink to="/admin/pacientes/ver" className={subLinkClass}>
