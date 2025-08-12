@@ -18,9 +18,7 @@ const UtilizarRecurso = () => {
   useEffect(() => {
     const loadRecursos = async () => {
       try {
-        const url = `${import.meta.env.VITE_BACKEND_URL}/admin/recurso/lista`; 
-        // Si tienes un endpoint exclusivo para paciente, úsalo:
-        // const url = `${import.meta.env.VITE_BACKEND_URL}/pacientes/recursos`;
+        const url = `${import.meta.env.VITE_BACKEND_URL}/pacientes/recurso/lista`; 
         const { data } = await axios.get(url, {
           headers: { Authorization: `Bearer ${token}` }
         });
@@ -47,7 +45,7 @@ const UtilizarRecurso = () => {
       setRespuestas({});
       setDetalle(null);
 
-      const url = `${import.meta.env.VITE_BACKEND_URL}/admin/recurso/${recurso._id}`;
+      const url = `${import.meta.env.VITE_BACKEND_URL}/pacientesrecurso/${recurso._id}`;
       const { data } = await axios.get(url, {
         headers: { Authorization: `Bearer ${token}` }
       });
