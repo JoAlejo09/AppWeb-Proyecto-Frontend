@@ -27,6 +27,12 @@ import ReportesEliminar from "./pages/admin/ReportesEliminar";
 import AdminHome from "./pages/admin/AdminHome";
 import AdminLayout from "./layouts/AdminLayout";
 import CitasAdmin from "./pages/admin/CitasAdmin";
+import PacienteLayout from "./layout/PacienteLayout";
+import PacienteHome from "./pages/paciente/PacienteHome";
+import PerfilPaciente from "./pages/paciente/PerfilPaciente";
+import CambiarPasswordPaciente from "./pages/paciente/CambiarPasswordPaciente";
+import RecursosUsar from "./pages/paciente/RecursosUsar";
+import RecursosUtilizados from "./pages/paciente/RecursosUtilizados";
 
 // Stripe
 import { Elements } from "@stripe/react-stripe-js";
@@ -51,8 +57,6 @@ function App() {
         <Route path="/pacientes/confirmar/:token" element={<Confirm />} />
         <Route path="/redes-sociales" element={<RedesSociales />} />
         <Route path="/oauth-success" element={<OAuthSuccess />} />
-        <Route path="/usuarios/chat" element={<Chat />} />
-        <Route path="/cita" element={<Elements stripe={stripePromise}><Cita /></Elements>}/>    
 
       {/*Admin Layout */}
       <Route path="/admin" element={<RutaProtegida rol="admin"><AdminLayout /></RutaProtegida>}>
@@ -85,6 +89,39 @@ function App() {
               </Elements>
             }
           />
+        </Route>
+        
+        {/* Paciente con layout persistente */}
+        <Route
+          path="/paciente"
+          element={
+            <RutaProtegida rol="paciente">
+              <PacienteLayout />
+            </RutaProtegida>
+          }
+        >
+          <Route index element={<PacienteHome />} />
+
+          {/* Perfil */}
+          <Route path="perfil" element={<PerfilPaciente />} />
+          <Route path="perfil/password" element={<CambiarPasswordPaciente />} />
+
+          {/* Recursos */}
+          <Route path="recursos/usar" element={<RecursosUsar />} />
+          <Route path="recursos/utilizados" element={<RecursosUtilizados />} />
+
+          {/* Citas */}
+          <Route
+            path="citas"
+            element={
+              <Elements stripe={stripePromise}>
+                <Cita />
+              </Elements>
+            }
+          />
+
+          {/* Chat */}
+          <Route path="chat" element={<Chat />} />
         </Route>
       </Routes>
     </Router>
