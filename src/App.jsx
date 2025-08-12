@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Main from "./pages/Main";
 import Informacion from "./pages/Informacion";
+import Contacto from "./pages/Contacto";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Active from "./pages/Active";
@@ -57,6 +58,7 @@ function App() {
         <Route path="/pacientes/confirmar/:token" element={<Confirm />} />
         <Route path="/redes-sociales" element={<RedesSociales />} />
         <Route path="/oauth-success" element={<OAuthSuccess />} />
+        <Route path="/contacto" element={<Contacto />} /> 
 
       {/*Admin Layout */}
       <Route path="/admin" element={<RutaProtegida rol="admin"><AdminLayout /></RutaProtegida>}>
