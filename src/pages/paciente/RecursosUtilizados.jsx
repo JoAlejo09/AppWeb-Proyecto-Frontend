@@ -17,6 +17,7 @@ const RecursosUtilizados = () => {
         setReportes(data || []);
       } catch (error) {
         toast.error("Error al cargar reportes");
+        console.error("Error al cargar reportes:", error);
       }
     })();
   }, [token]);

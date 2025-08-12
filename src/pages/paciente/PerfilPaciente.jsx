@@ -6,11 +6,13 @@ import { toast } from "react-toastify";
 const PerfilPaciente = () => {
   const [cargando, setCargando] = useState(true);
   const [preview, setPreview] = useState(null);
+  const [avatarUrl, setAvatarUrl] = useState(null);
   const [usuarioId, setUsuarioId] = useState(null);
 
-  const token = localStorage.getItem("token")?.replaceAll('"','');
-  const { register, handleSubmit, setValue, watch } = useForm();
+  // IMPORTANTE: guarda el token sin comillas al setearlo
+  const token = localStorage.getItem("token")?.replaceAll('"', '');
 
+  const { register, handleSubmit, setValue, watch } = useForm();
   const imagenArchivo = watch("imagenArchivo");
 
   useEffect(() => {
@@ -20,42 +22,60 @@ const PerfilPaciente = () => {
         const { data } = await axios.get(url, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setUsuarioId(data._id);
+
+        // ⚠️ El backend devuelve id, no _id
+        setUsuarioId(data.id);
+
         setValue("nombre", data.nombre || "");
         setValue("apellido", data.apellido || "");
         setValue("email", data.email || "");
         setValue("telefono", data.telefono || "");
-        if (data.imagen) setPreview(data.imagen);
+
+        // Opción A (si tu backend agrega imagen/imagenIA):
+        if (data.imagen || data.imagenIA) {
+          setAvatarUrl(data.imagen || data.imagenIA);
+        } else {
+          // Opción B: placeholder si no devuelves imagen
+          setAvatarUrl("/avatar-placeholder.jpg");
+        }
         setCargando(false);
       } catch (error) {
         console.error(error);
         toast.error("Error al cargar el perfil");
+        setCargando(false);
       }
     })();
   }, [token, setValue]);
 
-  // vista previa archivo
+  // vista previa de archivo local
   useEffect(() => {
     const file = imagenArchivo?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onloadend = () => setPreview(reader.result);
-    reader.readAsDataURL(file);
+    if (!file) return setPreview(null);
+    const objectUrl = URL.createObjectURL(file);
+    setPreview(objectUrl);
+    return () => URL.revokeObjectURL(objectUrl);
   }, [imagenArchivo]);
 
   const onSubmit = async (formData) => {
     try {
+      if (!usuarioId) {
+        toast.error("No se pudo detectar el ID del paciente");
+        return;
+      }
       const url = `${import.meta.env.VITE_BACKEND_URL}/pacientes/perfil/${usuarioId}`;
 
-      // Si envías imagen, usa FormData
+      // Enviar data como FormData si hay archivo
       const payload = new FormData();
-      Object.keys(formData).forEach((k) => {
-        if (k === "imagenArchivo" && formData[k]?.length) {
-          payload.append("imagen", formData[k][0]); // el backend espera 'imagen'
-        } else {
-          payload.append(k, formData[k]);
-        }
-      });
+      payload.append("nombre", formData.nombre || "");
+      payload.append("apellido", formData.apellido || "");
+      payload.append("telefono", formData.telefono || "");
+      // el email no debería cambiar aquí (normalmente)
+      payload.append("email", formData.email || "");
+
+      if (formData.imagenArchivo?.length) {
+        // ⚠️ Asegúrate que el backend lea 'imagen' (req.files.imagen)
+        payload.append("imagen", formData.imagenArchivo[0]);
+      }
 
       const { data } = await axios.put(url, payload, {
         headers: {
@@ -64,6 +84,11 @@ const PerfilPaciente = () => {
         },
       });
 
+      // Actualiza avatar si backend devuelve imagen actualizada
+      if (data?.usuario?.imagen || data?.usuario?.imagenIA) {
+        setAvatarUrl(data.usuario.imagen || data.usuario.imagenIA);
+      }
+
       toast.success(data.msg || "Perfil actualizado");
     } catch (error) {
       console.error(error);
@@ -71,53 +96,57 @@ const PerfilPaciente = () => {
     }
   };
 
-  if (cargando) return <p>Cargando perfil...</p>;
+  if (cargando) return <p className="p-4">Cargando perfil...</p>;
 
   return (
-    <div className="max-w-xl mx-auto bg-white rounded shadow p-5">
-      <h2 className="text-xl font-bold mb-4">Mi Perfil</h2>
+    <div className="max-w-2xl mx-auto bg-white rounded shadow p-6">
+      <h2 className="text-2xl font-bold mb-6">Mi Perfil</h2>
+
+      {/* Avatar */}
+      <div className="flex items-center gap-5 mb-6">
+        <div className="w-24 h-24 rounded-full bg-gray-100 overflow-hidden border">
+          {preview ? (
+            <img src={preview} alt="preview" className="w-full h-full object-cover" />
+          ) : (
+            <img src={avatarUrl || "/avatar-placeholder.jpg"} alt="avatar" className="w-full h-full object-cover" />
+          )}
+        </div>
+
+        <div>
+          <label className="block text-sm font-semibold mb-1">Cambiar foto</label>
+          <input
+            type="file"
+            accept="image/*"
+            {...register("imagenArchivo")}
+            className="block w-full text-sm"
+          />
+          <p className="text-xs text-gray-500 mt-1">La imagen se sube a Cloudinary.</p>
+        </div>
+      </div>
+
+      {/* Formulario */}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-
-        <div className="flex items-center gap-4">
-          <div className="w-24 h-24 rounded-full bg-gray-200 overflow-hidden">
-            {preview ? (
-              <img src={preview} alt="avatar" className="w-full h-full object-cover" />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center text-gray-500">
-                Sin imagen
-              </div>
-            )}
-          </div>
-          <div>
-            <label className="block text-sm font-semibold mb-1">Cambiar foto</label>
-            <input
-              type="file"
-              accept="image/*"
-              {...register("imagenArchivo")}
-              className="block w-full text-sm"
-            />
-            <p className="text-xs text-gray-500 mt-1">Se actualizará en Cloudinary</p>
-          </div>
+        <div>
+          <label className="block text-sm font-semibold">Nombre</label>
+          <input {...register("nombre")} className="w-full border rounded px-3 py-2" />
         </div>
 
         <div>
-          <label className="block text-sm">Nombre</label>
-          <input {...register("nombre")} className="w-full border px-2 py-1 rounded" />
-        </div>
-        <div>
-          <label className="block text-sm">Apellido</label>
-          <input {...register("apellido")} className="w-full border px-2 py-1 rounded" />
-        </div>
-        <div>
-          <label className="block text-sm">Correo</label>
-          <input {...register("email")} type="email" className="w-full border px-2 py-1 rounded" />
-        </div>
-        <div>
-          <label className="block text-sm">Teléfono</label>
-          <input {...register("telefono")} className="w-full border px-2 py-1 rounded" />
+          <label className="block text-sm font-semibold">Apellido</label>
+          <input {...register("apellido")} className="w-full border rounded px-3 py-2" />
         </div>
 
-        <button className="bg-teal-600 hover:bg-teal-700 text-white rounded px-4 py-2">
+        <div>
+          <label className="block text-sm font-semibold">Correo</label>
+          <input {...register("email")} type="email" className="w-full border rounded px-3 py-2 bg-gray-100" disabled />
+        </div>
+
+        <div>
+          <label className="block text-sm font-semibold">Teléfono</label>
+          <input {...register("telefono")} className="w-full border rounded px-3 py-2" />
+        </div>
+
+        <button className="bg-teal-600 hover:bg-teal-700 text-white rounded px-6 py-2">
           Guardar cambios
         </button>
       </form>
