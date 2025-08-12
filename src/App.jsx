@@ -27,6 +27,7 @@ import ReportesCrear from "./pages/admin/ReportesCrear";
 import ReportesEliminar from "./pages/admin/ReportesEliminar";
 import AdminHome from "./pages/admin/AdminHome";
 import AdminLayout from "./layouts/AdminLayout";
+import CitasAdmin from "./pages/admin/CitasAdmin";
 
 // Stripe
 import { Elements } from "@stripe/react-stripe-js";
@@ -81,7 +82,7 @@ function App() {
             path="citas"
             element={
               <Elements stripe={stripePromise}>
-                <Cita />
+                <CitasAdmin />
               </Elements>
             }
           />
