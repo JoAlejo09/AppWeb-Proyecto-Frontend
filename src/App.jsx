@@ -17,8 +17,6 @@ import OAuthSuccess from "./pages/OAuthSuccess";
 import Chat from "./pages/Chat";
 import Cita from "./pages/Cita"; 
 import PacientesListar from "./pages/admin/PacientesListar";
-import PacienteVer from "./pages/admin/PacienteVer";
-import PacienteBaja from "./pages/admin/PacienteBaja";
 import RecursosListar from "./pages/admin/RecursosListar";
 import RecursosCrear from "./pages/admin/RecursosCrear";
 import RecursosEliminar from "./pages/admin/RecursosEliminar";
@@ -69,9 +67,6 @@ function App() {
         <Route path="perfil/password" element={<CambiarPassword />} />    
         {/* Pacientes */}
           <Route path="pacientes" element={<PacientesListar />} />
-          <Route path="pacientes/ver" element={<PacienteVer />} />
-          <Route path="pacientes/baja" element={<PacienteBaja />} />
-
           {/* Recursos */}
           <Route path="recursos/listar" element={<RecursosListar />} />
           <Route path="recursos/crear" element={<RecursosCrear />} />

@@ -125,12 +125,12 @@ const PacientesListar = () => {
         <table className="min-w-full text-sm">
           <thead className="bg-gray-50 text-gray-600 text-xs uppercase">
             <tr>
-              <th className="py-3 px-4 text-left">Nombre</th>
-              <th className="py-3 px-4 text-left">Apellido</th>
-              <th className="py-3 px-4 text-left">Email</th>
-              <th className="py-3 px-4 text-left">Teléfono</th>
-              <th className="py-3 px-4 text-left">Estado</th>
-              <th className="py-3 px-4 text-left">Acciones</th>
+              <th className="py-3 px-3 text-left">Nombre</th>
+              <th className="py-3 px-3 text-left">Apellido</th>
+              <th className="py-3 px-3 text-left">Email</th>
+              <th className="py-3 px-3 text-left">Teléfono</th>
+              <th className="py-3 px-3 text-left">Estado</th>
+              <th className="py-3 px-3 text-left">Acciones</th>
             </tr>
           </thead>
 
@@ -150,11 +150,11 @@ const PacientesListar = () => {
             ) : (
               pacientesFiltrados.map((p) => (
                 <tr key={p._id} className="hover:bg-gray-50">
-                  <td className="py-3 px-4">{p.nombre}</td>
-                  <td className="py-3 px-4">{p.apellido}</td>
-                  <td className="py-3 px-4">{p.email}</td>
-                  <td className="py-3 px-4">{p.telefono || "-"}</td>
-                  <td className="py-3 px-4">
+                  <td className="py-3 px-3">{p.nombre}</td>
+                  <td className="py-3 px-3">{p.apellido}</td>
+                  <td className="py-3 px-3">{p.email}</td>
+                  <td className="py-3 px-3">{p.telefono || "-"}</td>
+                  <td className="py-3 px-3">
                     <span
                       className={`px-2 py-1 rounded text-xs ${
                         p.activo ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
@@ -163,7 +163,7 @@ const PacientesListar = () => {
                       {p.activo ? "Activo" : "Inactivo"}
                     </span>
                   </td>
-                  <td className="py-3 px-4">
+                  <td className="py-3 px-3">
                     <div className="flex items-center gap-2">
                       <button
                         className="inline-flex items-center px-2 py-1 text-blue-700 bg-blue-100 rounded hover:bg-blue-200"
