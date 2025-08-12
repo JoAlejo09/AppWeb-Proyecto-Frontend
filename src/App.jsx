@@ -18,12 +18,12 @@ import Chat from "./pages/Chat";
 import Cita from "./pages/Cita"; 
 import PacientesListar from "./pages/admin/PacientesListar";
 import RecursosCrear from "./pages/admin/RecursosCrear";
-import ReportesListar from "./pages/admin/ReportesListar";
-import ReportesCrear from "./pages/admin/ReportesCrear";
+import AdminReportes from "./pages/admin/AdminReportes";
 import ReportesEliminar from "./pages/admin/ReportesEliminar";
 import AdminHome from "./pages/admin/AdminHome";
 import AdminLayout from "./layout/AdminLayout";
 import CitasAdmin from "./pages/admin/CitasAdmin";
+
 import PacienteLayout from "./layout/PacienteLayout";
 import PacienteHome from "./pages/paciente/PacienteHome";
 import PerfilPaciente from "./pages/paciente/PerfilPaciente";
@@ -71,8 +71,7 @@ function App() {
           <Route path="recursos/crear" element={<RecursosCrear />} />
 
           {/* Reportes */}
-          <Route path="reportes/listar" element={<ReportesListar />} />
-          <Route path="reportes/crear" element={<ReportesCrear />} />
+          <Route path="reportes/listar" element={<AdminReportes />} />
           <Route path="reportes/eliminar" element={<ReportesEliminar />} />
 
           {/* Chat, Citas dentro del panel */}

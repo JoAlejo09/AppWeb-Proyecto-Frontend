@@ -73,7 +73,7 @@ const AdminLayout = () => {
           {openMenu === "pacientes" && (
             <div className="mt-1">
               <NavLink to="/admin/pacientes" className={subLinkClass}>
-                Lista de Pacientes
+                Listado de Pacientes
               </NavLink>
             </div>
           )}
@@ -90,10 +90,10 @@ const AdminLayout = () => {
           {openMenu === "recursos" && (
             <div className="mt-1">
               <NavLink to="/admin/recursos/listar" className={subLinkClass}>
-                Gestión de Recursos
+               Listado de Recursos
               </NavLink>
               <NavLink to="/admin/recursos/crear" className={subLinkClass}>
-                Crear
+                Crear Recurso
               </NavLink>
             </div>
           )}
@@ -110,13 +110,10 @@ const AdminLayout = () => {
           {openMenu === "reportes" && (
             <div className="mt-1">
               <NavLink to="/admin/reportes/listar" className={subLinkClass}>
-                Visualizar
-              </NavLink>
-              <NavLink to="/admin/reportes/crear" className={subLinkClass}>
-                Crear
+                Listado Reportes
               </NavLink>
               <NavLink to="/admin/reportes/eliminar" className={subLinkClass}>
-                Eliminar
+                Eliminar Recurso
               </NavLink>
             </div>
           )}
