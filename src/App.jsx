@@ -38,6 +38,7 @@ import RecursosUtilizados from "./pages/paciente/RecursosUtilizados";
 // Stripe
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import CambiarPassword from "./pages/admin/CambiarPassword";
 
 // Carga tu clave pública
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
@@ -65,7 +66,7 @@ function App() {
         <Route index element={<AdminHome />} />
 
         <Route path="perfil" element={<PerfilAdmin />} />
-        <Route path="perfil/password" element={<PerfilAdmin />} />    
+        <Route path="perfil/password" element={<CambiarPassword />} />    
         {/* Pacientes */}
           <Route path="pacientes/listar" element={<PacientesListar />} />
           <Route path="pacientes/ver" element={<PacienteVer />} />
