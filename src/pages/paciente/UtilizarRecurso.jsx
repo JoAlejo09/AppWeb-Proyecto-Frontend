@@ -1,4 +1,3 @@
-// src/pages/paciente/UtilizarRecurso.jsx
 import { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import storeAuth from "../../context/storeAuth.jsx";
@@ -113,52 +112,71 @@ const UtilizarRecurso = () => {
 
   // Render de contenido según tipo
   const renderContenido = () => {
-    if (!detalle || detalle.tipo !== "contenido") return null;
-    const cont = detalle.referencia; // { url, tipo, fuente }
+  if (!detalle || detalle.tipo !== "contenido") return null;
+  const cont = detalle?.referencia; // <-- opcional
+  if (!cont) {
+    return <p className="text-sm text-red-600">Este contenido no está disponible.</p>;
+  }
 
-    return (
-      <div className="space-y-3">
-        <p className="text-sm text-gray-700">
-          <span className="font-semibold">Tipo: </span> {cont?.tipo}
-        </p>
-        {cont?.tipo === "video" ? (
-          cont.url?.includes("youtube") ? (
-            <div className="aspect-w-16 aspect-h-9">
-              <iframe
-                className="w-full h-64"
-                src={cont.url.replace("watch?v=", "embed/")}
-                title="Video"
-                frameBorder="0"
-                allowFullScreen
-              ></iframe>
-            </div>
-          ) : (
-            <video controls className="w-full rounded">
-              <source src={cont.url} type="video/mp4" />
-              Tu navegador no soporta video HTML5.
-            </video>
-          )
+  const url = cont?.url || "";
+  const tipo = cont?.tipo || "";
+  const fuente = cont?.fuente || "";
+
+  return (
+    <div className="space-y-3">
+      <p className="text-sm text-gray-700">
+        <span className="font-semibold">Tipo: </span> {tipo || "—"}
+      </p>
+
+      {tipo === "video" ? (
+        url.includes("youtube") ? (
+          <div className="aspect-w-16 aspect-h-9">
+            <iframe
+              className="w-full h-64"
+              src={url.replace("watch?v=", "embed/")}
+              title="Video"
+              frameBorder="0"
+              allowFullScreen
+            />
+          </div>
+        ) : url ? (
+          <video controls className="w-full rounded">
+            <source src={url} type="video/mp4" />
+            Tu navegador no soporta video HTML5.
+          </video>
         ) : (
-          <a href={cont.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+          <p className="text-xs text-gray-500">No hay URL de video disponible.</p>
+        )
+      ) : (
+        url ? (
+          <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
             Abrir contenido
           </a>
-        )}
+        ) : (
+          <p className="text-xs text-gray-500">No hay URL disponible.</p>
+        )
+      )}
 
-        {cont?.fuente && <p className="text-xs text-gray-500">Fuente: {cont.fuente}</p>}
+      {fuente && <p className="text-xs text-gray-500">Fuente: {fuente}</p>}
 
-        <button
-          onClick={marcarVisto}
-          className="mt-3 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded"
-        >
-          Marcar como visto
-        </button>
-      </div>
-    );
-  };
+      <button
+        onClick={marcarVisto}
+        className="mt-3 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded"
+      >
+        Marcar como visto
+      </button>
+    </div>
+  );
+};
+
 
   const renderCuestionario = () => {
     if (!detalle || detalle.tipo !== "cuestionario") return null;
-    const preguntas = detalle.referencia?.preguntas || [];
+    const preguntas = detalle?.referencia?.preguntas || [];
+    if (!preguntas.length) {
+          return <p className="text-sm text-gray-500">Este cuestionario no tiene preguntas.</p>;
+
+    }
 
     const handleChange = (preguntaId, value) => {
       setRespuestas(prev => ({ ...prev, [preguntaId]: value }));
