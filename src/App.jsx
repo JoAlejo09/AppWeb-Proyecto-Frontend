@@ -17,9 +17,7 @@ import OAuthSuccess from "./pages/OAuthSuccess";
 import Chat from "./pages/Chat";
 import Cita from "./pages/Cita"; 
 import PacientesListar from "./pages/admin/PacientesListar";
-import RecursosListar from "./pages/admin/RecursosListar";
 import RecursosCrear from "./pages/admin/RecursosCrear";
-import RecursosEliminar from "./pages/admin/RecursosEliminar";
 import ReportesListar from "./pages/admin/ReportesListar";
 import ReportesCrear from "./pages/admin/ReportesCrear";
 import ReportesEliminar from "./pages/admin/ReportesEliminar";
@@ -71,7 +69,6 @@ function App() {
           {/* Recursos */}
           <Route path="recursos/listar" element={<RecursosAdmin />} />
           <Route path="recursos/crear" element={<RecursosCrear />} />
-          <Route path="recursos/eliminar" element={<RecursosEliminar />} />
 
           {/* Reportes */}
           <Route path="reportes/listar" element={<ReportesListar />} />
