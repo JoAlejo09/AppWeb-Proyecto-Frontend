@@ -16,6 +16,17 @@ import RedesSociales from "./pages/RedesSociales";
 import OAuthSuccess from "./pages/OAuthSuccess";
 import Chat from "./pages/Chat";
 import Cita from "./pages/Cita"; 
+import PacientesListar from "./pages/admin/PacientesListar";
+import PacienteVer from "./pages/admin/PacienteVer";
+import PacienteBaja from "./pages/admin/PacienteBaja";
+import RecursosListar from "./pages/admin/RecursosListar";
+import RecursosCrear from "./pages/admin/RecursosCrear";
+import RecursosEliminar from "./pages/admin/RecursosEliminar";
+import ReportesListar from "./pages/admin/ReportesListar";
+import ReportesCrear from "./pages/admin/ReportesCrear";
+import ReportesEliminar from "./pages/admin/ReportesEliminar";
+import AdminHome from "./pages/admin/AdminHome";
+import AdminLayout from "./layouts/AdminLayout";
 
 // Stripe
 import { Elements } from "@stripe/react-stripe-js";
@@ -42,33 +53,39 @@ function App() {
         <Route path="/oauth-success" element={<OAuthSuccess />} />
         <Route path="/usuarios/chat" element={<Chat />} />
         <Route path="/cita" element={<Elements stripe={stripePromise}><Cita /></Elements>}/>    
-        {/* Privadas - admin */}
-        <Route
-          path="/admin"
-          element={
-            <RutaProtegida rol="admin">
-              <DashboardAdmin />
-            </RutaProtegida>
-          }
-        />
-        <Route
-          path="/admin/perfil"
-          element={
-            <RutaProtegida rol="admin">
-              <PerfilAdmin />
-            </RutaProtegida>
-          }
-        />
 
-        {/* Privada - paciente */}
-        <Route
-          path="/paciente"
-          element={
-            <RutaProtegida rol = "paciente">
-              
-              </RutaProtegida>
-          }
-        />
+      {/*Admin Layout */}
+      <Route path="/admin" element={<RutaProtegida rol="admin"><AdminLayout /></RutaProtegida>}>
+        <Route index element={<AdminHome />} />
+
+        <Route path="perfil" element={<PerfilAdmin />} />
+        <Route path="perfil/password" element={<PerfilAdmin />} />    
+        {/* Pacientes */}
+          <Route path="pacientes/listar" element={<PacientesListar />} />
+          <Route path="pacientes/ver" element={<PacienteVer />} />
+          <Route path="pacientes/baja" element={<PacienteBaja />} />
+
+          {/* Recursos */}
+          <Route path="recursos/listar" element={<RecursosListar />} />
+          <Route path="recursos/crear" element={<RecursosCrear />} />
+          <Route path="recursos/eliminar" element={<RecursosEliminar />} />
+
+          {/* Reportes */}
+          <Route path="reportes/listar" element={<ReportesListar />} />
+          <Route path="reportes/crear" element={<ReportesCrear />} />
+          <Route path="reportes/eliminar" element={<ReportesEliminar />} />
+
+          {/* Chat, Citas dentro del panel */}
+          <Route path="chat" element={<Chat />} />
+          <Route
+            path="citas"
+            element={
+              <Elements stripe={stripePromise}>
+                <Cita />
+              </Elements>
+            }
+          />
+        </Route>
       </Routes>
     </Router>
   );
