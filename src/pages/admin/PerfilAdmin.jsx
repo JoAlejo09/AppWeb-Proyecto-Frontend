@@ -18,7 +18,7 @@ const PerfilAdmin = () => {
   useEffect(() => {
     const cargaPerfil = async () => {
       try {
-        const url = `${import.meta.env.VITE_BACKEND_URL_ADMIN}perfil`;
+        const url = `${import.meta.env.VITE_BACKEND_URL}/admin/perfil`;
         const { data } = await axios.get(url, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -59,7 +59,7 @@ const PerfilAdmin = () => {
     if (!adminId) return toast.error("No se pudo detectar el ID del admin");
 
     try {
-      const url = `${import.meta.env.VITE_BACKEND_URL_ADMIN}perfil/${adminId}`;
+      const url = `${import.meta.env.VITE_BACKEND_URL}/admin/perfil/${adminId}`;
 
       // Si hay archivo -> multipart/form-data
       if (file) {
