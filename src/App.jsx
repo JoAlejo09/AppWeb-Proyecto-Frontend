@@ -32,6 +32,7 @@ import PerfilPaciente from "./pages/paciente/PerfilPaciente";
 import CambiarPasswordPaciente from "./pages/paciente/CambiarPasswordPaciente";
 import RecursosUsar from "./pages/paciente/RecursosUsar";
 import RecursosUtilizados from "./pages/paciente/RecursosUtilizados";
+import RecursosAdmin from "./pages/admin/RecursosAdmin";
 
 // Stripe
 import { Elements } from "@stripe/react-stripe-js";
@@ -68,7 +69,7 @@ function App() {
         {/* Pacientes */}
           <Route path="pacientes" element={<PacientesListar />} />
           {/* Recursos */}
-          <Route path="recursos/listar" element={<RecursosListar />} />
+          <Route path="recursos/listar" element={<RecursosAdmin />} />
           <Route path="recursos/crear" element={<RecursosCrear />} />
           <Route path="recursos/eliminar" element={<RecursosEliminar />} />
 

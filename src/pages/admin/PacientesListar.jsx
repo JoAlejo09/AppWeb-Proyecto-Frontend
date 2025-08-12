@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import storeAuth from "../../context/storeAuth.jsx";
 import { FiEye, FiEdit2, FiTrash2, FiSearch } from "react-icons/fi";
 
-/** Modal genérico */
 const Modal = ({ open, onClose, children, title }) => {
   if (!open) return null;
   return (
@@ -35,7 +34,6 @@ const PacientesListar = () => {
   const [openConfirm, setOpenConfirm] = useState(false);
   const [idParaBaja, setIdParaBaja] = useState(null);
 
-  // Cargar pacientes
   const fetchPacientes = async () => {
     setLoading(true);
     try {
@@ -80,13 +78,11 @@ const PacientesListar = () => {
     setOpenEdit(true);
   };
 
-  // Confirm de baja
   const confirmarBaja = (id) => {
     setIdParaBaja(id);
     setOpenConfirm(true);
   };
 
-  // Dar de baja
   const darDeBaja = async () => {
     try {
       const url = `${import.meta.env.VITE_BACKEND_URL}/admin/pacientes/baja/${idParaBaja}`;

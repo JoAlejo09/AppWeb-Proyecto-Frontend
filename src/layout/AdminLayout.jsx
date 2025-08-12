@@ -90,7 +90,7 @@ const AdminLayout = () => {
           {openMenu === "recursos" && (
             <div className="mt-1">
               <NavLink to="/admin/recursos/listar" className={subLinkClass}>
-                Visualizar
+                Gestón de Recursos
               </NavLink>
               <NavLink to="/admin/recursos/crear" className={subLinkClass}>
                 Crear
