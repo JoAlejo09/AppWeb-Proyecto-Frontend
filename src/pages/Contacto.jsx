@@ -154,7 +154,7 @@ const Contacto = () => {
                 loading="lazy"
                 allowFullScreen
                 referrerPolicy="no-referrer-when-downgrade"
-                src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyD_demo-key-no-real&zoom=16&q=${datos.lat},${datos.lng}`}
+                src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBx1XOAmsV0F5Y5nlwLN4teigOmAMsqBPQ&zoom=16&q=${datos.lat},${datos.lng}`}
               />
             </div>
 
