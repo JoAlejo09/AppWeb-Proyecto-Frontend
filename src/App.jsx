@@ -25,7 +25,7 @@ import ReportesListar from "./pages/admin/ReportesListar";
 import ReportesCrear from "./pages/admin/ReportesCrear";
 import ReportesEliminar from "./pages/admin/ReportesEliminar";
 import AdminHome from "./pages/admin/AdminHome";
-import AdminLayout from "./layouts/AdminLayout";
+import AdminLayout from "./layout/AdminLayout";
 import CitasAdmin from "./pages/admin/CitasAdmin";
 import PacienteLayout from "./layout/PacienteLayout";
 import PacienteHome from "./pages/paciente/PacienteHome";
