@@ -45,7 +45,7 @@ const UtilizarRecurso = () => {
       setRespuestas({});
       setDetalle(null);
 
-      const url = `${import.meta.env.VITE_BACKEND_URL}/pacientesrecurso/${recurso._id}`;
+      const url = `${import.meta.env.VITE_BACKEND_URL}/pacientes/recurso/${recurso._id}`;
       const { data } = await axios.get(url, {
         headers: { Authorization: `Bearer ${token}` }
       });
