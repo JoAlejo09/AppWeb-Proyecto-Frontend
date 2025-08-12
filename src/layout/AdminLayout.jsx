@@ -112,9 +112,6 @@ const AdminLayout = () => {
               <NavLink to="/admin/reportes/listar" className={subLinkClass}>
                 Listado Reportes
               </NavLink>
-              <NavLink to="/admin/reportes/eliminar" className={subLinkClass}>
-                Eliminar Recurso
-              </NavLink>
             </div>
           )}
         </div>

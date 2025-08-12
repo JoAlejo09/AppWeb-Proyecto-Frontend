@@ -19,7 +19,6 @@ import Cita from "./pages/Cita";
 import PacientesListar from "./pages/admin/PacientesListar";
 import RecursosCrear from "./pages/admin/RecursosCrear";
 import AdminReportes from "./pages/admin/AdminReportes";
-import ReportesEliminar from "./pages/admin/ReportesEliminar";
 import AdminHome from "./pages/admin/AdminHome";
 import AdminLayout from "./layout/AdminLayout";
 import CitasAdmin from "./pages/admin/CitasAdmin";
@@ -72,7 +71,6 @@ function App() {
 
           {/* Reportes */}
           <Route path="reportes/listar" element={<AdminReportes />} />
-          <Route path="reportes/eliminar" element={<ReportesEliminar />} />
 
           {/* Chat, Citas dentro del panel */}
           <Route path="chat" element={<Chat />} />
