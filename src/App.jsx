@@ -5,7 +5,6 @@ import Main from "./pages/Main";
 import Informacion from "./pages/Informacion";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import DashboardAdmin from "./pages/DashboardAdmin";
 import Active from "./pages/Active";
 import Recuperar from "./pages/Recuperar";
 import NuevoPassword from "./pages/NuevoPassword";
