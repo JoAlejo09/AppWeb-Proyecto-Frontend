@@ -35,7 +35,7 @@ const RecursosUtilizados = () => {
 
         // 2) Obtener reportes del paciente
         // Ajusta si pones este endpoint bajo /admin o /pacientes
-        const urlReportes = `${import.meta.env.VITE_BACKEND_URL}/reporte/mis-reportes/${id}`;
+        const urlReportes = `${import.meta.env.VITE_BACKEND_URL}/pacientes/reporte/mis-reportes/${id}`;
         const { data } = await axios.get(urlReportes, {
           headers: { Authorization: `Bearer ${token}` },
         });
