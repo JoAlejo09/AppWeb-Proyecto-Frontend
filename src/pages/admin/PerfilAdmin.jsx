@@ -12,7 +12,7 @@ const PerfilAdmin = () =>{
     useEffect(()=>{
         const cargaPerfil = async ()=>{
             try {
-                const url = `${import.meta.env.VITE_BACKEND_URL_ADMIN}perfil`;
+                const url = `${import.meta.env.VITE_BACKEND_URL}/admin/perfil`;
 
                 const {data} = await axios.get(url, {
                     headers: {Authorization: `Bearer ${token}`
