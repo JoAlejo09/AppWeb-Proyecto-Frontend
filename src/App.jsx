@@ -27,7 +27,7 @@ import PacienteLayout from "./layout/PacienteLayout";
 import PacienteHome from "./pages/paciente/PacienteHome";
 import PerfilPaciente from "./pages/paciente/PerfilPaciente";
 import CambiarPasswordPaciente from "./pages/paciente/CambiarPasswordPaciente";
-import RecursosUsar from "./pages/paciente/RecursosUsar";
+import UtilizarRecurso from "./pages/paciente/UtilizarRecurso";
 import RecursosUtilizados from "./pages/paciente/RecursosUtilizados";
 import RecursosAdmin from "./pages/admin/RecursosAdmin";
 
@@ -100,7 +100,7 @@ function App() {
           <Route path="perfil/password" element={<CambiarPasswordPaciente />} />
 
           {/* Recursos */}
-          <Route path="recursos/usar" element={<RecursosUsar />} />
+          <Route path="recursos/usar" element={<UtilizarRecurso />} />
           <Route path="recursos/utilizados" element={<RecursosUtilizados />} />
 
           {/* Citas */}
