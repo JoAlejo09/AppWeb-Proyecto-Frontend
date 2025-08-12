@@ -33,7 +33,7 @@ const PerfilAdmin = () => {
         setValue("telefono", data.telefono || "");
 
         // Foto: primero imagen (Cloudinary), luego IA, o placeholder
-        const foto = data.imagen || data.imagenIA || "/avatar-placeholder.png";
+        const foto = data.imagen || data.imagenIA || "/avatar-placeholder.jpg";
         setAvatarUrl(foto);
 
         setCargando(false);
