@@ -144,7 +144,7 @@ const RecursosCrear = () => {
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-bold">Crear Recurso</h2>
         <button
-          onClick={() => navigate("/admin/recursos")}
+          onClick={() => navigate("/admin/recursos/listar")}
           className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
         >
           ← Volver al listado
